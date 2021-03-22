@@ -1,0 +1,15 @@
+current directory: /Users/Ein/Sites/labyrinth_of_doom/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.7.3/ext/bootsnap
+/Users/Ein/.rbenv/versions/2.6.3/bin/ruby -I /Users/Ein/.rbenv/versions/2.6.3/lib/ruby/2.6.0 -r ./siteconf20210322-47904-13vu1fn.rb extconf.rb
+creating Makefile
+
+current directory: /Users/Ein/Sites/labyrinth_of_doom/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.7.3/ext/bootsnap
+make "DESTDIR=" clean
+
+current directory: /Users/Ein/Sites/labyrinth_of_doom/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.7.3/ext/bootsnap
+make "DESTDIR="
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/Ein/Sites/labyrinth_of_doom/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.7.3/ext/bootsnap
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20210322-47904-gjpnu8/bootsnap
