@@ -10,28 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_22_212139) do
+ActiveRecord::Schema.define(version: 2021_03_23_195033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "character_positions", force: :cascade do |t|
-    t.bigint "character_id", null: false
-    t.bigint "map_tile_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["character_id"], name: "index_character_positions_on_character_id"
-    t.index ["map_tile_id"], name: "index_character_positions_on_map_tile_id"
-  end
 
   create_table "characters", force: :cascade do |t|
     t.integer "health", null: false
     t.integer "attack", null: false
     t.integer "defense", null: false
     t.integer "actions", null: false
-    t.string "type", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "game_id", null: false
+    t.index ["game_id"], name: "index_characters_on_game_id"
+  end
+
+  create_table "enemies", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.integer "health", null: false
+    t.integer "attack", null: false
+    t.integer "defense", null: false
+    t.integer "actions", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_enemies_on_game_id"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.bigint "map_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["map_id"], name: "index_games_on_map_id"
+  end
+
+  create_table "map_positions", force: :cascade do |t|
+    t.string "occupant_type", null: false
+    t.bigint "occupant_id", null: false
+    t.bigint "map_tile_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["map_tile_id"], name: "index_map_positions_on_map_tile_id"
+    t.index ["occupant_type", "occupant_id"], name: "index_map_positions_on_occupant"
   end
 
   create_table "map_tiles", force: :cascade do |t|
@@ -49,9 +69,36 @@ ActiveRecord::Schema.define(version: 2021_03_22_212139) do
     t.integer "height", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name", null: false
   end
 
-  add_foreign_key "character_positions", "characters"
-  add_foreign_key "character_positions", "map_tiles"
+  create_table "starting_characters", force: :cascade do |t|
+    t.bigint "map_id", null: false
+    t.integer "health", null: false
+    t.integer "attack", null: false
+    t.integer "defense", null: false
+    t.integer "actions", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["map_id"], name: "index_starting_characters_on_map_id"
+  end
+
+  create_table "starting_enemies", force: :cascade do |t|
+    t.bigint "map_id", null: false
+    t.integer "health", null: false
+    t.integer "attack", null: false
+    t.integer "defense", null: false
+    t.integer "actions", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["map_id"], name: "index_starting_enemies_on_map_id"
+  end
+
+  add_foreign_key "characters", "games"
+  add_foreign_key "enemies", "games"
+  add_foreign_key "games", "maps"
+  add_foreign_key "map_positions", "map_tiles"
   add_foreign_key "map_tiles", "maps"
+  add_foreign_key "starting_characters", "maps"
+  add_foreign_key "starting_enemies", "maps"
 end

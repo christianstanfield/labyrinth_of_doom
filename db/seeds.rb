@@ -6,26 +6,33 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Character.destroy_all
 Map.destroy_all
 
-player = Player.create!(
+map = Map.create!(
+  name: 'Level 1',
+  length: 6,
+  height: 5
+)
+
+character = map.starting_characters.create!(
   health: 1,
   attack: 1,
   defense: 1,
   actions: 1
 )
 
-enemy = Enemy.create!(
+enemy1 = map.starting_enemies.create!(
   health: 1,
   attack: 1,
   defense: 0,
   actions: 2
 )
 
-map = Map.create!(
-  length: 6,
-  height: 5
+enemy2 = map.starting_enemies.create!(
+  health: 2,
+  attack: 2,
+  defense: 0,
+  actions: 2
 )
 
 map_tile_terrains = {
@@ -46,8 +53,7 @@ map_tile_terrains = {
   5 => {
     0 => :exit,
     1 => :impassable,
-    3 => :impassable,
-    4 => :start
+    3 => :impassable
   }
 }
 
@@ -61,8 +67,10 @@ map.length.times do |column|
   end
 end
 
-starting_tile = map.map_tiles.start.first
-enemy_tile    = map.map_tiles.find_by(column: 0, row: 4)
+starting_tile = map.map_tiles.find_by(column: 5, row: 4)
+enemy1_tile    = map.map_tiles.find_by(column: 0, row: 4)
+enemy2_tile    = map.map_tiles.find_by(column: 4, row: 0)
 
-starting_tile.character_positions.create!(character: player)
-enemy_tile.character_positions.create!(character: enemy)
+starting_tile.map_positions.create!(occupant: character)
+enemy1_tile.map_positions.create!(occupant: enemy1)
+enemy2_tile.map_positions.create!(occupant: enemy2)

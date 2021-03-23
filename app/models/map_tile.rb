@@ -1,12 +1,11 @@
 class MapTile < ApplicationRecord
   belongs_to :map
-  has_many :character_positions, dependent: :destroy
-  has_many :characters, through: :character_positions
+  has_many :map_positions, dependent: :destroy
+  has_many :occupants, through: :map_positions
 
   enum terrain_type: {
     open:       'open',
     impassable: 'impassable',
-    start:      'start',
     exit:       'exit'
-  }
+  }, _suffix: true
 end
