@@ -1,0 +1,17 @@
+<div class="left-container">
+  <a class="btn btn-dark" href="/games">Back</a>
+</div>
+
+<div class="right-container">
+  <h4>Available maps</h4>
+
+  <% @maps.each do |map| %>
+    <div>
+      <h5 class="p-2" style="display: inline"><%= map.name %></h5>
+      <%= form_with model: @game do |form| %>
+        <%= form.hidden_field :map_id, value: map.id %>
+        <button type="submit" class="btn btn-dark">Select</button>
+      <% end %>
+    </div>
+  <% end %>
+</div>

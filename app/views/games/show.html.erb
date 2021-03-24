@@ -1,0 +1,24 @@
+<div class="left-container">
+  <% @game.map.height.times do |row| %>
+    <div class="p-1">
+      <% @game.map.length.times do |column| %>
+        <% map_tile = matching_map_tile(@map_tiles, row, column) %>
+
+        <% if map_tile.impassable_terrain_type? %>
+          <%= render partial: "map_tiles/impassable" %>
+        <% elsif occupant_on_map_tile?(map_tile, @characters) %>
+          <%= render partial: "map_tiles/character" %>
+        <% elsif occupant_on_map_tile?(map_tile, @enemies) %>
+          <%= render partial: "map_tiles/enemy" %>
+        <% elsif map_tile.exit_terrain_type? %>
+          <%= render partial: "map_tiles/exit" %>
+        <% else %>
+          <%= render partial: "map_tiles/open" %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="right-container">
+</div>

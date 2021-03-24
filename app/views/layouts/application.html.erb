@@ -11,6 +11,20 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="title m-2">
+      <h1>Labyrinth of Doom</h1>
+    </div>
+
+    <div class="outer-container m-2">
+      <div class="main-container">
+        <%= yield %>
+      </div>
+    </div>
+
+    <% flash.each do |type, message| %>
+      <div class="alert alert-danger">
+        <%= message %>
+      </div>
+    <% end %>
   </body>
 </html>
