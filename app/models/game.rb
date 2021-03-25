@@ -37,7 +37,9 @@ class Game < ApplicationRecord
 
   def enemies_turn(player_character)
     living_enemies.each do |enemy|
-      enemy.take_turn(player_character)
+      enemy.actions.times do
+        enemy.take_turn(player_character)
+      end
     end
   end
 
