@@ -46,4 +46,8 @@ class Game < ApplicationRecord
   def single_player_character
     living_characters.first
   end
+
+  def last_played_time
+    updated_at.strftime("%A %B %d")
+  end
 end

@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
 
   def index
+    @games = Game.order(updated_at: :desc).limit(10)
   end
 
   def new

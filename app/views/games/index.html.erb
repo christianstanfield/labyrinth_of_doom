@@ -1,5 +1,12 @@
 <div class="left-container">
   <h4>Previous Games</h4>
+
+  <% @games.each do |game| %>
+    <div>
+      <h5 class="p-2" style="display: inline"><%= game.last_played_time %></h5>
+      <a class="btn btn-dark m-1" href="/games/<%= game.id %>">Continue</a>
+    </div>
+  <% end %>
 </div>
 
 <div class="right-container">
