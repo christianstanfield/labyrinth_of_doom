@@ -3,6 +3,7 @@ class Enemy < ApplicationRecord
 
   belongs_to :game
   has_one :map_position, as: :occupant, dependent: :destroy
+  has_many :items, as: :owner, dependent: :destroy
 
   def take_turn(player_character)
     character_map_tile_id = player_character.map_position.map_tile_id

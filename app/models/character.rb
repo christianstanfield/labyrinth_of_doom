@@ -3,6 +3,7 @@ class Character < ApplicationRecord
 
   belongs_to :game
   has_one :map_position, as: :occupant, dependent: :destroy
+  has_many :items, as: :owner, dependent: :destroy
 
   def attack_enemy
     damage = nil
