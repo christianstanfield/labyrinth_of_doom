@@ -3,6 +3,7 @@ class Game < ApplicationRecord
   belongs_to :map
   has_many :characters, dependent: :destroy
   has_many :living_characters, -> { alive }, class_name: 'Character', dependent: :destroy
+  has_many :deceased_characters, -> { dead }, class_name: 'Character', dependent: :destroy
   has_many :enemies, dependent: :destroy
   has_many :living_enemies, -> { alive }, class_name: 'Enemy', dependent: :destroy
 

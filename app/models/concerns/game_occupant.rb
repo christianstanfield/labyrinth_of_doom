@@ -10,6 +10,7 @@ module GameOccupant
     attr_accessor :defending
 
     scope :alive, -> { where('health > 0') }
+    scope :dead, -> { where('health <= 0') }
     scope :for_game, -> (game) { where(game: game).alive }
     scope :at_position, -> (map_tile) {
       joins(:map_position).where(map_position: { map_tile: map_tile })
@@ -53,6 +54,6 @@ module GameOccupant
   end
 
   def dead?
-    health == 0
+    health <= 0
   end
 end

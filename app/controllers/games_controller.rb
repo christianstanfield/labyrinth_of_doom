@@ -23,6 +23,7 @@ class GamesController < ApplicationController
     @game       = Game.find(params[:id])
     @map_tiles  = @game.map.map_tiles
     @characters = Character.for_game(@game).includes(:map_position)
+    @deceased_characters = @game.deceased_characters.includes(:map_position)
     @enemies    = Enemy.for_game(@game).includes(:map_position)
   end
 
