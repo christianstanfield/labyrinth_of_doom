@@ -1,7 +1,10 @@
 class Game < ApplicationRecord
+
   belongs_to :map
   has_many :characters, dependent: :destroy
+  has_many :living_characters, -> { alive }, class_name: 'Character', dependent: :destroy
   has_many :enemies, dependent: :destroy
+  has_many :living_enemies, -> { alive }, class_name: 'Enemy', dependent: :destroy
 
   TRANSFERABLE_ATTRIBUTES = ["health", "attack", "defense", "actions"]
 
@@ -23,7 +26,21 @@ class Game < ApplicationRecord
     end
   end
 
+  def over?
+    living_characters.empty?
+  end
+
+  def successful?
+    !over? && living_characters.at_position(map.exit_tile).size == living_characters.size
+  end
+
+  def enemies_turn(player_character)
+    living_enemies.each do |enemy|
+      enemy.take_turn(player_character)
+    end
+  end
+
   def single_player_character
-    characters.first
+    living_characters.first
   end
 end

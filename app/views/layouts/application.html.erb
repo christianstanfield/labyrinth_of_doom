@@ -22,7 +22,8 @@
     </div>
 
     <% flash.each do |type, message| %>
-      <div class="alert alert-danger">
+      <% alert_class = "alert alert-#{alert_type(type)}" %>
+      <div class="<%= alert_class %>">
         <%= message %>
       </div>
     <% end %>

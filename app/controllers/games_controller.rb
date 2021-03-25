@@ -33,13 +33,25 @@ class GamesController < ApplicationController
     if character_move
       single_player_character.move(character_move)
     elsif character_attacking?
-      single_player_character.attack
+      attack_result = single_player_character.attack_enemy
+      flash.notice = attack_result if attack_result
     elsif character_defending?
-      single_player_character.defending == true
+      single_player_character.defend
+      flash.notice = 'You defended'
     end
 
     if single_player_character.errors.present?
-      flash.notice = single_player_character.first_error_message
+      flash.alert = single_player_character.first_error_message
+    end
+
+    if @game.successful?
+      flash.notice = 'Congratulations! You escaped with your life'
+    else
+      @game.enemies_turn(single_player_character)
+    end
+
+    if @game.over?
+      flash.alert = 'You died. Game over'
     end
 
     redirect_to @game

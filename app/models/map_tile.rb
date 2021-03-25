@@ -40,4 +40,60 @@ class MapTile < ApplicationRecord
   def occupied_by_character?(game)
     characters.for_game(game).exists?
   end
+
+  def line_of_sight_above
+    viewable_tiles = map.map_tiles.where(column: column)
+      .where('row < ?', row).order(row: :desc)
+
+    if end_of_sight = end_of_sight_for(viewable_tiles)
+      viewable_tiles.select do |map_tile|
+        map_tile.row > end_of_sight.row
+      end
+    else
+      viewable_tiles
+    end
+  end
+
+  def line_of_sight_below
+    viewable_tiles = map.map_tiles.where(column: column)
+      .where('row > ?', row).order(:row)
+
+    if end_of_sight = end_of_sight_for(viewable_tiles)
+      viewable_tiles.select do |map_tile|
+        map_tile.row < end_of_sight.row
+      end
+    else
+      viewable_tiles
+    end
+  end
+
+  def line_of_sight_to_the_left
+    viewable_tiles = map.map_tiles.where(row: row)
+      .where('map_tiles.column < ?', column).order(column: :desc)
+
+    if end_of_sight = end_of_sight_for(viewable_tiles)
+      viewable_tiles.select do |map_tile|
+        map_tile.column > end_of_sight.column
+      end
+    else
+      viewable_tiles
+    end
+  end
+
+  def line_of_sight_to_the_right
+    viewable_tiles = map.map_tiles.where(row: row)
+      .where('map_tiles.column > ?', column).order(:column)
+
+    if end_of_sight = end_of_sight_for(viewable_tiles)
+      viewable_tiles.select do |map_tile|
+        map_tile.column < end_of_sight.column
+      end
+    else
+      viewable_tiles
+    end
+  end
+
+  def end_of_sight_for(viewable_tiles)
+    viewable_tiles.find { |map_tile| map_tile.impassable_terrain_type? }
+  end
 end
