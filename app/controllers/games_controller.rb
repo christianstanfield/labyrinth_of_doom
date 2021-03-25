@@ -13,7 +13,7 @@ class GamesController < ApplicationController
 
     if @game.save
       @game.setup
-      redirect_to @game
+      redirect_to @game, notice: 'Escape if you can'
     else
       redirect_to :new_game, notice: @game.first_error_message
     end
