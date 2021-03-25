@@ -22,4 +22,8 @@ class Game < ApplicationRecord
       MapPosition.create!(occupant: new_enemy, map_tile_id: map_tile_id)
     end
   end
+
+  def single_player_character
+    characters.first
+  end
 end
