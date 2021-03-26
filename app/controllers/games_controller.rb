@@ -46,14 +46,12 @@ class GamesController < ApplicationController
       flash.alert = single_player_character.first_error_message
     end
 
-    if @game.successful?
-      flash.notice = 'Congratulations! You escaped with your life'
-    else
-      @game.enemies_turn(single_player_character)
-    end
+    @game.enemies_turn(single_player_character)
 
     if @game.over?
       flash.alert = 'You died. Game over'
+    elsif @game.successful?
+      flash.notice = 'Congratulations! You escaped with your life'
     end
 
     redirect_to @game
