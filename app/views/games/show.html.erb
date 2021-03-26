@@ -57,4 +57,24 @@
   <div class="m-3">
     <a class="btn btn-secondary" href="/games">Exit Game</a>
   </div>
+
+  <% unless @game.successful? || @game.over? %>
+    <% character = @characters.first %>
+    <div>
+      <p class="m-0"><strong>
+        Health: <%= character.health %> - Actions: <%= character.actions %>
+      </strong></p>
+      <p class="m-0"><strong>
+        Attack: <%= character.attack %> - Defense: <%= character.defense %>
+      </strong></p>
+
+      <% if character.items.present? %>
+        <p class="m-0"><strong>Items:</strong></p>
+        <% character.items.each do |item| %>
+          <p class="m-0"><%= item.name %></p>
+          <p class="m-0"><%= item.ability %></p>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
