@@ -29,6 +29,8 @@ class Character < ApplicationRecord
     end
 
     if damage
+      pickup_items_from(opponent) if opponent.dead?
+
       attack_result = "You dealt #{damage} damage"
       opponent.dead? ? "#{attack_result}. Enemy defeated" : attack_result
     end

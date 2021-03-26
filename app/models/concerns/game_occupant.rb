@@ -18,20 +18,25 @@ module GameOccupant
   end
 
   def move(direction)
-    destination =
-      case direction
-      when UPWARDS_MOVE
-        current_position.tile_above
-      when DOWNWARDS_MOVE
-        current_position.tile_below
-      when LEFTWARDS_MOVE
-        current_position.tile_to_the_left
-      when RIGHTWARDS_MOVE
-        current_position.tile_to_the_right
+    invalid_move = 'Invalid move'
+    destination  = current_position.tile_in_direction(direction)
+
+    if destination.nil?
+      errors.add(:base, invalid_move)
+
+    elsif destination.impassable_or_occupied?(game)
+      if possesses_tunneling_cloak? && destination.impassable_terrain_type?
+        new_destination = destination.tile_in_direction(direction)
+
+        if new_destination.nil? || new_destination.impassable_or_occupied?(game)
+          errors.add(:base, invalid_move)
+        else
+          map_position.update!(map_tile: new_destination)
+        end
+      else
+        errors.add(:base, invalid_move)
       end
 
-    if destination.nil? || destination.impassable_or_occupied?(game)
-      errors.add(:base, 'Invalid move')
     else
       map_position.update!(map_tile: destination)
     end
@@ -55,5 +60,16 @@ module GameOccupant
 
   def dead?
     health <= 0
+  end
+
+  def pickup_items_from(owner)
+    owner.items.each do |item|
+      attributes = item.attributes.slice(*Game::ITEM_TRANSFERABLE_ATTRIBUTES)
+      items.create!(attributes)
+    end
+  end
+
+  def possesses_tunneling_cloak?
+    items.where(reference_id: 'tunneling_cloak').exists?
   end
 end

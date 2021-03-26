@@ -28,6 +28,12 @@ enemy1 = map.starting_enemies.create!(
   actions: 2
 )
 
+enemy1.items.create!(
+  name: 'Cloak of Quantum Tunneling',
+  reference_id: 'tunneling_cloak',
+  ability: 'Allows owner to teleport through walls'
+)
+
 enemy2 = map.starting_enemies.create!(
   health: 2,
   attack: 2,

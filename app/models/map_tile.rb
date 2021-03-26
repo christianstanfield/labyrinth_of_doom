@@ -11,6 +11,19 @@ class MapTile < ApplicationRecord
     exit:       'exit'
   }, _suffix: true
 
+  def tile_in_direction(direction)
+    case direction
+    when GameOccupant::UPWARDS_MOVE
+      tile_above
+    when GameOccupant::DOWNWARDS_MOVE
+      tile_below
+    when GameOccupant::LEFTWARDS_MOVE
+      tile_to_the_left
+    when GameOccupant::RIGHTWARDS_MOVE
+      tile_to_the_right
+    end
+  end
+
   def tile_above
     map.map_tiles.find_by(row: row - 1, column: column)
   end

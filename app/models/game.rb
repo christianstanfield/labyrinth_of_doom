@@ -7,11 +7,12 @@ class Game < ApplicationRecord
   has_many :enemies, dependent: :destroy
   has_many :living_enemies, -> { alive }, class_name: 'Enemy', dependent: :destroy
 
-  TRANSFERABLE_ATTRIBUTES = ["health", "attack", "defense", "actions"]
+  OCCUPANT_TRANSFERABLE_ATTRIBUTES = ["health", "attack", "defense", "actions"]
+  ITEM_TRANSFERABLE_ATTRIBUTES     = ["name", "reference_id", "ability"]
 
   def setup
     map.starting_characters.includes(:map_position).each do |starting_character|
-      attributes = starting_character.attributes.slice(*TRANSFERABLE_ATTRIBUTES)
+      attributes = starting_character.attributes.slice(*OCCUPANT_TRANSFERABLE_ATTRIBUTES)
       new_character = characters.create!(attributes)
 
       map_tile_id = starting_character.map_position.map_tile_id
@@ -19,11 +20,13 @@ class Game < ApplicationRecord
     end
 
     map.starting_enemies.includes(:map_position).each do |starting_enemy|
-      attributes = starting_enemy.attributes.slice(*TRANSFERABLE_ATTRIBUTES)
+      attributes = starting_enemy.attributes.slice(*OCCUPANT_TRANSFERABLE_ATTRIBUTES)
       new_enemy = enemies.create!(attributes)
 
       map_tile_id = starting_enemy.map_position.map_tile_id
       MapPosition.create!(occupant: new_enemy, map_tile_id: map_tile_id)
+
+      new_enemy.pickup_items_from(starting_enemy)
     end
   end
 
