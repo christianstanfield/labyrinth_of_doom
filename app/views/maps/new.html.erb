@@ -1,0 +1,25 @@
+<div class="left-container">
+  <a class="btn btn-dark" href="/">Back</a>
+</div>
+
+<div class="right-container">
+  <h4 class="m-3">New Map</h4>
+  <p><em>(Experimental)</em></p>
+
+  <%= form_with model: @map do |form| %>
+    <div class="m-2">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+    <div class="m-2">
+      <%= form.label :length %>
+      <%= form.number_field :length, max: 10, min: 3 %>
+    </div>
+    <div class="m-2">
+      <%= form.label :height %>
+      <%= form.number_field :height, max: 10, min: 3 %>
+    </div>
+
+    <button type="submit" class="btn btn-dark">Create</button>
+  <% end %>
+</div>

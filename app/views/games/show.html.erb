@@ -25,29 +25,29 @@
 <div class="right-container">
   <% unless @game.successful? || @game.over? %>
     <div class="m-3">
-      <%= form_with model: @game do |form| %>
+      <%= form_with model: @game, class: "inline" do |form| %>
         <%= form.hidden_field :move, value: Character::LEFTWARDS_MOVE %>
         <button type="submit" class="btn btn-dark">Left</button>
       <% end %>
-      <%= form_with model: @game do |form| %>
+      <%= form_with model: @game, class: "inline" do |form| %>
         <%= form.hidden_field :move, value: Character::UPWARDS_MOVE %>
         <button type="submit" class="btn btn-dark">Up</button>
       <% end %>
-      <%= form_with model: @game do |form| %>
+      <%= form_with model: @game, class: "inline" do |form| %>
         <%= form.hidden_field :move, value: Character::RIGHTWARDS_MOVE %>
         <button type="submit" class="btn btn-dark">Right</button>
       <% end %>
-      <%= form_with model: @game do |form| %>
+      <%= form_with model: @game, class: "inline" do |form| %>
         <%= form.hidden_field :move, value: Character::DOWNWARDS_MOVE %>
         <button type="submit" class="btn btn-dark">Down</button>
       <% end %>
     </div>
     <div class="m-3">
-      <%= form_with model: @game do |form| %>
+      <%= form_with model: @game, class: "inline" do |form| %>
         <%= form.hidden_field :attack, value: true %>
         <button type="submit" class="btn btn-dark">Attack</button>
       <% end %>
-      <%= form_with model: @game do |form| %>
+      <%= form_with model: @game, class: "inline" do |form| %>
         <%= form.hidden_field :defend, value: true %>
         <button type="submit" class="btn btn-dark">Defend</button>
       <% end %>

@@ -74,8 +74,8 @@ map.length.times do |column|
 end
 
 starting_tile = map.map_tiles.find_by(column: 5, row: 4)
-enemy1_tile    = map.map_tiles.find_by(column: 0, row: 4)
-enemy2_tile    = map.map_tiles.find_by(column: 4, row: 0)
+enemy1_tile   = map.map_tiles.find_by(column: 0, row: 4)
+enemy2_tile   = map.map_tiles.find_by(column: 4, row: 0)
 
 starting_tile.map_positions.create!(occupant: character)
 enemy1_tile.map_positions.create!(occupant: enemy1)

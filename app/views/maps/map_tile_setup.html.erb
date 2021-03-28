@@ -1,0 +1,24 @@
+<div class="left-container">
+  <%= link_to('Back', @map, method: :delete, class: "btn btn-dark") %>
+</div>
+
+<div class="right-container">
+  <h4 class="m-3"><%= @map.name %></h4>
+  <% tile_type = 'Walls' if @map_tile_type == Map::TILE_TERRAIN_SELECTION  %>
+  <% tile_type = 'Exit (only one)' if @map_tile_type == Map::TILE_EXIT_SELECTION  %>
+  <p><em>Select <%= tile_type %></em></p>
+
+  <%= form_with model: @map do |form| %>
+    <%= form.hidden_field :type, value: @map_tile_type %>
+    <% @map.height.times do |row| %>
+      <div class="p-1">
+        <% @map.length.times do |column| %>
+          <% box = "#{row}-#{column}" %>
+          <%= form.check_box box %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <button type="submit" class="btn btn-dark m-2">Create</button>
+  <% end %>
+</div>

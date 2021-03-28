@@ -1,0 +1,113 @@
+<div class="left-container">
+  <%= link_to('Back', @map, method: :delete, class: "btn btn-dark") %>
+
+  <h4 class="m-3"><%= @map.name %></h4>
+
+  <% @map.height.times do |row| %>
+    <div class="p-1">
+      <% @map.length.times do |column| %>
+        <% map_tile = matching_map_tile(@map.map_tiles, row, column) %>
+
+        <% if map_tile.impassable_terrain_type? %>
+          <%= render partial: "map_tiles/impassable" %>
+        <% elsif map_tile.exit_terrain_type? %>
+          <%= render partial: "map_tiles/exit" %>
+        <% else %>
+          <%= render partial: "map_tiles/open" %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="right-container">
+  <h4 class="m-3">Player/Enemy Stats</h4>
+
+  <%= form_with model: @map do |map_form| %>
+    <p>Player Stats</p>
+    <%= fields_for @map.starting_characters.new do |starting_character_form| %>
+      <div class="m-2">
+        <%= starting_character_form.label :health %>
+        <%= starting_character_form.number_field :health, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_character_form.label :actions %>
+        <%= starting_character_form.number_field :actions, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_character_form.label :attack %>
+        <%= starting_character_form.number_field :attack, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_character_form.label :defense %>
+        <%= starting_character_form.number_field :defense, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_character_form.label :row %>
+        <%= starting_character_form.number_field :row, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_character_form.label :column %>
+        <%= starting_character_form.number_field :column, max: 10 %>
+      </div>
+    <% end %>
+
+    <p>First Enemy Stats</p>
+    <%= fields_for :starting_enemy1, @map.starting_enemies.new do |starting_enemy1_form| %>
+      <div class="m-2">
+        <%= starting_enemy1_form.label :health %>
+        <%= starting_enemy1_form.number_field :health, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy1_form.label :actions %>
+        <%= starting_enemy1_form.number_field :actions, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy1_form.label :attack %>
+        <%= starting_enemy1_form.number_field :attack, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy1_form.label :defense %>
+        <%= starting_enemy1_form.number_field :defense, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy1_form.label :row %>
+        <%= starting_enemy1_form.number_field :row, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy1_form.label :column %>
+        <%= starting_enemy1_form.number_field :column, max: 10 %>
+      </div>
+    <% end %>
+
+    <p>Second Enemy Stats</p>
+    <%= fields_for :starting_enemy2, @map.starting_enemies.new do |starting_enemy2_form| %>
+      <div class="m-2">
+        <%= starting_enemy2_form.label :health %>
+        <%= starting_enemy2_form.number_field :health, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy2_form.label :actions %>
+        <%= starting_enemy2_form.number_field :actions, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy2_form.label :attack %>
+        <%= starting_enemy2_form.number_field :attack, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy2_form.label :defense %>
+        <%= starting_enemy2_form.number_field :defense, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy2_form.label :row %>
+        <%= starting_enemy2_form.number_field :row, max: 10 %>
+      </div>
+      <div class="m-2">
+        <%= starting_enemy2_form.label :column %>
+        <%= starting_enemy2_form.number_field :column, max: 10 %>
+      </div>
+    <% end %>
+
+    <button type="submit" class="btn btn-dark">Create</button>
+  <% end %>
+</div>
