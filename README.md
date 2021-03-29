@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To get the application up and running you'll need:
 
-Things you may want to cover:
+* Ruby version 2.6.3 installed (https://github.com/rbenv/rbenv)
+* Postgres (can be installed via homebrew https://brew.sh)
 
-* Ruby version
+Then from within the application directory:
 
-* System dependencies
+* run `bundle` to install the remaining dependencies (you may need to run `gem install bundler`)
+* run `yarn` to install node modules
+* to create a new database `bin/rails db:create`
+* to migrate `bin/rails db:schema:load`
+* and to seed the initial map `bin/rails db:seed`
 
-* Configuration
+To access the site:
 
-* Database creation
+* run `bin/rails s` to start the server
+* navigate to localhost:3000
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
